@@ -17,4 +17,9 @@ server.post('/games', async (req, res) => {
   }
 });
 
+server.get('/games', async (req, res) => {
+  const games = db.getAll();
+  res.status(200).json(games);
+});
+
 module.exports = server;
