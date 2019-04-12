@@ -14,8 +14,9 @@ let games = [
   }
 ];
 
+let id = 2;
+
 function getId() {
-  let id = 1;
   return id++;
 }
 
