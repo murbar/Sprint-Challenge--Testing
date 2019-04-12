@@ -3,6 +3,41 @@ const server = require('./server.js');
 const db = require('./db');
 
 describe('Games', () => {
+  describe('GET /games/:id', () => {
+    it('should respond with 200', async () => {
+      const response = await request(server).get('/games/1');
+      expect(response.status).toBe(200);
+    });
+
+    it('should respond with JSON', async () => {
+      const response = await request(server).get('/games/1');
+      expect(response.type).toBe('application/json');
+    });
+
+    it('should return a single game', async () => {
+      const response = await request(server).get('/games/1');
+      expect(Array.isArray(response.body)).not.toBe(true);
+    });
+
+    it('should return a valid game object', async () => {
+      const response = await request(server).get('/games/1');
+
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          title: expect.any(String),
+          genre: expect.any(String),
+          releaseYear: expect.any(Number),
+          id: expect.any(Number)
+        })
+      );
+    });
+
+    it('should respond with 404 when no game with given ID is found', async () => {
+      const response = await request(server).get('/games/999');
+      expect(response.status).toBe(404);
+    });
+  });
+
   describe('POST /games', () => {
     it('should respond with 422 if game object is invalid', async () => {
       const response = await request(server)
