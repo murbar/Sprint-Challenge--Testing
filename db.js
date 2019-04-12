@@ -32,7 +32,7 @@ function getById(id) {
 function create(game) {
   const existing = games.find(g => g.title === game.title);
 
-  if (existing) throw Error('Game title must be unique.');
+  if (existing) throw new Error('Game title must be unique.');
 
   games.push({
     id: getId(),
