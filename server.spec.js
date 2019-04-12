@@ -78,7 +78,6 @@ describe('Games', () => {
 
     it('should return an array of records', async () => {
       const response = await request(server).get('/games');
-      console.log(response.body);
       expect(Array.isArray(response.body)).toBe(true);
     });
 
