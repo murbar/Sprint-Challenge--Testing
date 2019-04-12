@@ -133,4 +133,40 @@ describe('Games', () => {
       expect(response.body).toHaveLength(recordsCount);
     });
   });
+
+  describe('DELETE /games/:id', () => {
+    it('should successfully delete a game', async () => {
+      const { body: game } = await request(server)
+        .post('/games')
+        .send({
+          title: 'Paperboy',
+          genre: 'Arcade',
+          releaseYear: 1980
+        });
+      const recordsCount = db.getAll().length;
+      await request(server).delete(`/games/${game.id}`);
+      const nonexistentGame = db.getById(game.id);
+      const newRecordsCount = db.getAll().length;
+      expect(newRecordsCount).toEqual(recordsCount - 1);
+      expect(nonexistentGame).toBe(null);
+    });
+
+    it('should respond with 204 when user is deleted', async () => {
+      const { body: game } = await request(server)
+        .post('/games')
+        .send({
+          title: 'Galaga',
+          genre: 'Arcade',
+          releaseYear: 1981
+        });
+      console.log(game);
+      const response = await request(server).delete(`/games/${game.id}`);
+      expect(response.status).toBe(204);
+    });
+
+    it('should respond with 404 when user does not exist', async () => {
+      const response = await request(server).delete('/users/55');
+      expect(response.status).toBe(404);
+    });
+  });
 });
