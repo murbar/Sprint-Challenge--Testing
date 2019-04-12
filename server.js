@@ -12,8 +12,17 @@ server.post('/games', async (req, res) => {
   if (!gameIsValid(game)) {
     res.status(422).json({ error: 'A title, genre, and releaseYear are required.' });
   } else {
-    const newGame = db.create(game);
-    res.status(201).json(newGame);
+    try {
+      const newGame = db.create(game);
+      res.status(201).json(newGame);
+    } catch (error) {
+      if (error.message.includes('unique')) {
+        res.status(405).json({ error: error.message });
+      } else {
+        // some other error, re-throw
+        throw error;
+      }
+    }
   }
 });
 
