@@ -41,4 +41,14 @@ server.get('/games/:id', async (req, res) => {
   }
 });
 
+server.delete('/games/:id', async (req, res) => {
+  const { id } = req.params;
+  const deleted = db.remove(parseInt(id));
+  if (!deleted) {
+    res.status(404).json({ error: 'No game with that ID.' });
+  } else {
+    res.status(204).end();
+  }
+});
+
 module.exports = server;
