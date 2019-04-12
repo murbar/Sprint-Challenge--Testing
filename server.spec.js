@@ -27,9 +27,9 @@ describe('Games', () => {
       const response = await request(server)
         .post('/games')
         .send({
-          title: 'Asteroids',
+          title: 'Pong',
           genre: 'Arcade',
-          releaseYear: 1979
+          releaseYear: 1972
         });
       const newRecordsCount = db.getAll().length;
       expect(newRecordsCount).toBe(recordsCount + 1);
@@ -39,9 +39,9 @@ describe('Games', () => {
       const response = await request(server)
         .post('/games')
         .send({
-          title: 'Asteroids',
+          title: 'Breakout',
           genre: 'Arcade',
-          releaseYear: 1979
+          releaseYear: 1976
         });
       expect(response.type).toBe('application/json');
     });
@@ -50,7 +50,7 @@ describe('Games', () => {
       const response = await request(server)
         .post('/games')
         .send({
-          title: 'Asteroids',
+          title: 'Space Invaders',
           genre: 'Arcade',
           releaseYear: 1979
         });
