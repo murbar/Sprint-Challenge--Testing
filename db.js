@@ -32,7 +32,9 @@ function getById(id) {
 function create(game) {
   games.push({
     id: getId(),
-    ...game
+    title: game.title,
+    genre: game.genre,
+    releaseYear: game.releaseYear
   });
   return games[games.length - 1];
 }
