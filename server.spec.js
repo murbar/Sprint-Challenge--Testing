@@ -10,5 +10,45 @@ describe('Games', () => {
         .send({ game: 'Bad request' });
       expect(response.status).toBe(422);
     });
+
+    it('should respond with 201 if game is created successfully', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Asteroids',
+          genre: 'Arcade',
+          releaseYear: 1979
+        });
+      expect(response.status).toBe(201);
+    });
+
+    it('should respond with JSON when a game is created', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Asteroids',
+          genre: 'Arcade',
+          releaseYear: 1979
+        });
+      expect(response.type).toBe('application/json');
+    });
+
+    it('should return the new game when a game is created', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Asteroids',
+          genre: 'Arcade',
+          releaseYear: 1979
+        });
+      expect(response.body).toBe(
+        expect.objectContaining({
+          title: expect.any(String),
+          genre: expect.any(String),
+          releaseYear: expect.any(Number),
+          id: expect.any(Number)
+        })
+      );
+    });
   });
 });
