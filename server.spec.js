@@ -64,4 +64,28 @@ describe('Games', () => {
       );
     });
   });
+
+  describe('GET /games', () => {
+    it('should respond with 200', async () => {
+      const response = await request(server).get('/games');
+      expect(response.status).toBe(200);
+    });
+
+    it('should respond with JSON', async () => {
+      const response = await request(server).get('/games');
+      expect(response.type).toBe('application/json');
+    });
+
+    it('should return an array of records', async () => {
+      const response = await request(server).get('/games');
+      console.log(response.body);
+      expect(Array.isArray(response.body)).toBe(true);
+    });
+
+    it('should return all records', async () => {
+      const recordsCount = db.getAll().length;
+      const response = await request(server).get('/games');
+      expect(response.body).toHaveLength(recordsCount);
+    });
+  });
 });
