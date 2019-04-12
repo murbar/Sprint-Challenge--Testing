@@ -11,6 +11,17 @@ describe('Games', () => {
       expect(response.status).toBe(422);
     });
 
+    it('should respond with 405 if game exists with that title', async () => {
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Pacman',
+          genre: 'Arcade',
+          releaseYear: 1980
+        });
+      expect(response.status).toBe(405);
+    });
+
     it('should respond with 201 if game is created successfully', async () => {
       const response = await request(server)
         .post('/games')
