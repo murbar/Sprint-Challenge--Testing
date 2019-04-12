@@ -145,9 +145,9 @@ describe('Games', () => {
         });
       const recordsCount = db.getAll().length;
       await request(server).delete(`/games/${game.id}`);
-      const nonexistentGame = db.getById(game.id);
       const newRecordsCount = db.getAll().length;
       expect(newRecordsCount).toEqual(recordsCount - 1);
+      const nonexistentGame = db.getById(game.id);
       expect(nonexistentGame).toBe(null);
     });
 
