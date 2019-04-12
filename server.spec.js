@@ -54,7 +54,7 @@ describe('Games', () => {
           genre: 'Arcade',
           releaseYear: 1979
         });
-      expect(response.body).toBe(
+      expect(response.body).toEqual(
         expect.objectContaining({
           title: expect.any(String),
           genre: expect.any(String),
