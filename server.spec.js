@@ -22,6 +22,19 @@ describe('Games', () => {
       expect(response.status).toBe(201);
     });
 
+    it('should add a new game to the DB when game created successfully', async () => {
+      const recordsCount = db.getAll().length;
+      const response = await request(server)
+        .post('/games')
+        .send({
+          title: 'Asteroids',
+          genre: 'Arcade',
+          releaseYear: 1979
+        });
+      const newRecordsCount = db.getAll().length;
+      expect(newRecordsCount).toBe(recordsCount + 1);
+    });
+
     it('should respond with JSON when a game is created', async () => {
       const response = await request(server)
         .post('/games')
